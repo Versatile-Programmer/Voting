@@ -7,6 +7,8 @@ import GeneralElectionPage from './components/GeneralElectionPage';
 import SignupPage from './components/Signup';
 import Login from "./components/Login"
 import Home from './components/Home';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './components/Dashboard';
 
 function App() {
     const [electionData, setElectionData] = useState(null);
@@ -16,7 +18,7 @@ function App() {
 
     useEffect(() => {
       const storedUser = localStorage.getItem('user');
-      console.log(" Insdie the app.js",storedUser)
+      console.log(" Insdie the app.js",JSON.parse(storedUser))
       if (storedUser) {
         console.log("got user stored user")
           setUser(JSON.parse(storedUser));
@@ -40,8 +42,17 @@ function App() {
            <Route path="/clubmanagement" element={user?.isAdmin ? <ClubManagement /> : <Navigate to="/login" />} /> */}
            {/* <Route path="/createElection" element={user?.isAdmin ? <CreateElection setUser={setUser} /> : <Navigate to="/login" />} /> */}
           <Route path="/generalElectionPage" element={<GeneralElectionPage user={user} setUser={setUser}/>} />
-          <Route path="/createElection" element={<CreateElection setElectionData={setElectionData}/>} />
+          <Route
+            path="/createElection"
+            element={
+              <ProtectedRoute user={user}>
+                <CreateElection setElectionData={setElectionData} />
+              </ProtectedRoute>
+              }
+          />
           <Route path="/voting/:electionId" element={<VotingPage />} />
+
+          <Route path="/dashboard" element={<Dashboard user={user}/>} />
           {/* <Route path="/voting" element={<Voting electionData={electionData} />} /> */}
         </Routes>
       </div>
