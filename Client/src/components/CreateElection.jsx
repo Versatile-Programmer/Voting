@@ -47,7 +47,7 @@ function Home({ setElectionData }) {
       setElectionData(response.data);
 
       // Navigate to the voting page after successful creation
-      navigate('/voting');
+      navigate('/generalElectionPage');
     } catch (error) {
       console.error('Error creating election:', error);
       // You can add more error handling here
