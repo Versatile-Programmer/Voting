@@ -40,6 +40,12 @@ contract VotingSystem {
         uint creator_id;
     }
 
+    struct MemberData {
+        uint id;
+        string name;
+        string roll_no;
+    }
+
     struct Election {
         uint id;
         string name;
@@ -221,9 +227,18 @@ contract VotingSystem {
         }
     }
 
-    function getMembers(string calldata _club_name) public view returns (uint[] memory) {
+    function getMembers(string calldata _club_name) public view returns (MemberData[] memory) {
         require(club_name_to_club[_club_name].exists, "Club does not exist!");
-        return club_name_to_club[_club_name].members;
+        MemberData[] memory result = new MemberData[](club_name_to_club[_club_name].members.length);
+        Student memory temp;
+        Club memory club = club_name_to_club[_club_name];
+        for (uint i = 0; i < club.members.length; i++) {
+            temp = getStudentDetailsById(club.members[i]);
+            result[i].id = temp.id;
+            result[i].name = temp.name;
+            result[i].roll_no = temp.roll_no;
+        }
+        return result;
     }
 
     function applyForClubMembership(string calldata _club_name) public {
