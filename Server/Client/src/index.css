@@ -1,0 +1,6 @@
+/* src/index.css */
+
+/* These are Tailwind's built-in styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
