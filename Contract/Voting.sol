@@ -241,6 +241,34 @@ contract VotingSystem {
         return result;
     }
 
+    function getWaiting(string calldata _club_name) public view returns (MemberData[] memory) {
+        require(club_name_to_club[_club_name].exists, "Club does not exist!");
+        MemberData[] memory result = new MemberData[](club_name_to_club[_club_name].members.length);
+        Student memory temp;
+        Club memory club = club_name_to_club[_club_name];
+        for (uint i = 0; i < club.waitlist.length; i++) {
+            temp = getStudentDetailsById(club.waitlist[i]);
+            result[i].id = temp.id;
+            result[i].name = temp.name;
+            result[i].roll_no = temp.roll_no;
+        }
+        return result;
+    }
+
+    function getAdmins(string calldata _club_name) public view returns (MemberData[] memory) {
+        require(club_name_to_club[_club_name].exists, "Club does not exist!");
+        MemberData[] memory result = new MemberData[](club_name_to_club[_club_name].members.length);
+        Student memory temp;
+        Club memory club = club_name_to_club[_club_name];
+        for (uint i = 0; i < club.admins.length; i++) {
+            temp = getStudentDetailsById(club.admins[i]);
+            result[i].id = temp.id;
+            result[i].name = temp.name;
+            result[i].roll_no = temp.roll_no;
+        }
+        return result;
+    }    
+
     function applyForClubMembership(string calldata _club_name) public {
         require(club_name_to_club[_club_name].exists, "Club does not exist");
         Student memory self = getStudentDetailsByHash(msg.sender);
