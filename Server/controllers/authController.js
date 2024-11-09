@@ -86,7 +86,7 @@ const login = async (req, res) => {
             message: "login success",
             email,
             token,
-            name: findUser.name,
+            name: findUser.username,
             department:findUser.department,
             isAdmin:findUser.isAdmin,
             clubs:findUser.clubs,
