@@ -86,6 +86,21 @@ contract VotingSystem {
         student_list[student_list.length - 1].hashes.push(msg.sender);
     }
 
+    function amIAnAdmin() public view returns (string memory) {
+        Student memory me = getStudentDetailsByHash(msg.sender);
+        require(me.exists, "User does not exist.");
+        Club memory temp;
+        for (uint i = 0; i < me.clubs.length; i++) {
+            temp = clubByID(me.clubs[i]);
+            for (uint j = 0; j < temp.admins.length; j++) {
+                if (temp.admins[j] == me.id) {
+                    return temp.name;
+                }
+            }
+        }
+        return "";
+    }
+
     function amIRegistered() public view returns (bool) {
         for (uint i = 0; i < student_list.length; i++) {
             for (uint j = 0; j < student_list[i].hashes.length; j++) {
