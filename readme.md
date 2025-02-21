@@ -1,6 +1,6 @@
 # Project Purpose
-- This was the project we have created in Hackahton of our university in TechXetra event.
-- We had coded two continious days in this project.
+- This was the project we have created in Hackathon of our university in TechXetra event.
+- We had coded two continuous days in this project.
 
 ## Team Members
 - Abhilash Ojha
